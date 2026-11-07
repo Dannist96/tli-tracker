@@ -166,7 +166,27 @@ if activity.suffix != ".kt":
 # Do not start the foreground overlay service from Activity.onCreate/onResume.
 # Samsung Android can terminate the app during startup when a foreground
 # service is started before the user has explicitly enabled overlay access.
-# The service and manifest entry remain available for the later safe launcher.
+# The service and manifest entry remain available for a later safe launcher.
+# PiP is safe to enter from the foreground Activity when the user presses Home.
+if "onUserLeaveHint" not in text:
+    if "import android.os.Build" not in text:
+        text = text.replace(f"package {package}", f"package {package}\n\nimport android.app.PictureInPictureParams\nimport android.os.Build\nimport android.util.Rational", 1)
+    class_end = text.rfind("}")
+    if class_end < 0:
+        raise SystemExit("could not find MainActivity closing brace")
+    pip = """
+  override fun onUserLeaveHint() {
+    super.onUserLeaveHint()
+    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+      val params = PictureInPictureParams.Builder()
+        .setAspectRatio(Rational(16, 9))
+        .build()
+      enterPictureInPictureMode(params)
+    }
+  }
+"""
+    text = text[:class_end] + pip + text[class_end:]
+    activity.write_text(text)
 
 manifest = next((ROOT.parent / "main").rglob("AndroidManifest.xml"), None)
 if manifest is None:
