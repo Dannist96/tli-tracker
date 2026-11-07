@@ -164,10 +164,10 @@ class OverlayService : Service() {{
 if activity.suffix == ".kt":
     if "OverlayService" not in text:
         if "import android.os.Bundle" not in text:
-            text = text.replace(f"package {package}", f"package {package}\n\nimport android.os.Bundle\nimport android.content.Intent", 1)
+            text = text.replace(f"package {package}", f"package {package}\n\nimport android.os.Bundle\nimport android.content.Intent\nimport android.provider.Settings", 1)
         else:
-            text = text.replace("import android.os.Bundle", "import android.os.Bundle\nimport android.content.Intent", 1)
-        start_call = "        startService(Intent(this, OverlayService::class.java))"
+            text = text.replace("import android.os.Bundle", "import android.os.Bundle\nimport android.content.Intent\nimport android.provider.Settings", 1)
+        start_call = "        if (Settings.canDrawOverlays(this)) startService(Intent(this, OverlayService::class.java))"
         # Newer Tauri templates already provide onCreate (for example to call
         # enableEdgeToEdge). Add the service start to that method instead of
         # appending a second class body.
