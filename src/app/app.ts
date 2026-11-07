@@ -118,7 +118,10 @@ export class App {
     // PiP dimensions vary by Samsung One UI and orientation. Detect a small
     // window by its shorter side instead of requiring both CSS dimensions to
     // be below the same threshold.
-    const compact = Math.min(window.innerWidth, window.innerHeight) <= 520 && Math.max(window.innerWidth, window.innerHeight) <= 1100;
+    // A normal portrait phone is roughly 400x900 CSS pixels. PiP is both
+    // narrow and short; requiring the long side to stay below 700 avoids
+    // hijacking the full phone UI while still matching Samsung PiP windows.
+    const compact = Math.min(window.innerWidth, window.innerHeight) <= 520 && Math.max(window.innerWidth, window.innerHeight) <= 700;
     const isHud = this.route().startsWith('/overlay');
     if (compact && !isHud) void this.router.navigateByUrl('/overlay');
     else if (!compact && isHud) void this.router.navigateByUrl('/overview');
