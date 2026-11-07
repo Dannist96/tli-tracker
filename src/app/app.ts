@@ -140,6 +140,16 @@ export class App {
   }
 
   async toggleOverlay(): Promise<void> {
+    // Android cannot create a second Tauri WebView window. Open the dedicated
+    // HUD route in the current activity instead; MainActivity's PiP hook then
+    // keeps this HUD visible when the user presses Home or switches to the game.
+    if (/Android/i.test(navigator.userAgent)) {
+      const next = !this.overlayOpen();
+      if (next) await this.router.navigateByUrl('/overlay');
+      else await this.router.navigateByUrl('/overview');
+      this.overlayOpen.set(next);
+      return;
+    }
     this.overlayOpen.set(await api.toggleOverlay());
   }
 }
