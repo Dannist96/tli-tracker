@@ -11,10 +11,10 @@ if len(activities) != 1:
 
 activity = activities[0]
 text = activity.read_text()
-match = re.search(r"^\\s*package\\s+([A-Za-z0-9_.]+)", text, re.MULTILINE)
+match = re.search(r"^\s*package\s+([A-Za-z0-9_.]+)", text, re.MULTILINE)
 if not match:
     for candidate in ROOT.rglob("AndroidManifest.xml"):
-        manifest_match = re.search(r"\\bpackage=\"([A-Za-z0-9_.]+)\"", candidate.read_text())
+        manifest_match = re.search(r"\bpackage=\"([A-Za-z0-9_.]+)\"", candidate.read_text())
         if manifest_match:
             match = manifest_match
             break
