@@ -21,7 +21,11 @@ if not match:
 if not match:
     raise SystemExit("could not determine generated Android package")
 package = match.group(1)
-package_dir = ROOT / Path(*package.split("."))
+# Kotlin source files belong below the generated project's `main/java` tree.
+# `ROOT` is `.../app/src/main`, so writing directly below it creates a file
+# that Gradle does not compile (and MainActivity then cannot resolve the
+# service class).
+package_dir = ROOT / "java" / Path(*package.split("."))
 package_dir.mkdir(parents=True, exist_ok=True)
 
 service = package_dir / "OverlayService.kt"
