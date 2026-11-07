@@ -1,0 +1,301 @@
+{
+  "nav": {
+    "overview": "Overview",
+    "bag": "Bag",
+    "prices": "Prices",
+    "history": "History",
+    "analytics": "Analytics",
+    "strategies": "Strategies",
+    "settings": "Settings",
+    "overlay": "Overlay"
+  },
+  "status": {
+    "starting": "Starting…",
+    "noLog": "Game log not found",
+    "waiting": "Waiting for game log",
+    "inMap": "Tracking map",
+    "idle": "Idle"
+  },
+  "common": {
+    "minimize": "Minimize",
+    "maximize": "Maximize",
+    "close": "Close",
+    "search": "Search…",
+    "reload": "Reload",
+    "loading": "Loading…"
+  },
+  "overview": {
+    "title": "Overview",
+    "noPlayer": "No character detected yet",
+    "newSession": "New session",
+    "profit": "Session profit",
+    "afterTax": "Loot valued after 12.5% market fee",
+    "noTax": "Loot valued at full market price",
+    "perHourMap": "Profit / hour",
+    "perHourWall": "Real time",
+    "maps": "Maps",
+    "avgMap": "Avg map",
+    "mapTime": "Map time",
+    "sessionTime": "Session",
+    "bag": "Bag value",
+    "bagCalibrated": "Bag snapshot complete",
+    "bagPartial": "Bag partially known",
+    "mapLog": "Map log"
+  },
+  "current": {
+    "inMap": "In map",
+    "paused": "Paused · in town",
+    "end": "End map",
+    "none": "No map running. Enter a map to start tracking."
+  },
+  "drops": {
+    "tab": {
+      "loot": "Loot",
+      "cost": "Costs",
+      "unpriced": "No price"
+    },
+    "empty": "Nothing yet",
+    "noCost": "No costs recorded",
+    "allPriced": "Every drop has a price",
+    "estimated": "Estimated: the exact amount used was not known",
+    "more": "+{n} more"
+  },
+  "runs": {
+    "map": "Map",
+    "time": "Time",
+    "loot": "Loot",
+    "cost": "Cost",
+    "profit": "Profit",
+    "perHour": "Per hour",
+    "delete": "Delete run",
+    "empty": "No maps in this period"
+  },
+  "map": {
+    "unknown": "Unknown map"
+  },
+  "timemark": {
+    "0": "K1",
+    "1": "K2",
+    "2": "K3",
+    "3": "K4",
+    "4": "K5",
+    "5": "K6",
+    "6": "K7-0",
+    "7": "K7-1",
+    "8": "K7-2",
+    "9": "K8-0",
+    "10": "K8-1",
+    "11": "K8-2",
+    "12": "U8",
+    "13": "Deep Space"
+  },
+  "region": {
+    "0": "Glacial Abyss",
+    "1": "Blistering Lava Sea",
+    "2": "Steel Forge",
+    "3": "Thunder Wastes",
+    "4": "Voidlands",
+    "5": "Myriad Realms",
+    "6": "Deep Space"
+  },
+  "setup": {
+    "openSettings": "Open settings",
+    "noLog": {
+      "title": "Game log not found.",
+      "body": "The Steam install of Torchlight: Infinite was not detected. Pick UE_game.log manually."
+    },
+    "notEnabled": {
+      "title": "Turn on game logging to start tracking:",
+      "step1": "In Torchlight: Infinite open Settings and enable \"Enable Log\" (not \"Upload Log\").",
+      "step2": "Return to character selection and enter the game with your character again.",
+      "step3": "Keep this app running. No administrator rights are needed."
+    },
+    "calibrate": {
+      "title": "Calibrate your bag.",
+      "body": "Open the Currency and Other tabs of your bag (or sort them) once, so loot can be measured exactly. Until then, only stacks seen changing are counted."
+    }
+  },
+  "category": {
+    "all": "All",
+    "currency": "Currency",
+    "compass": "Compasses",
+    "beacon": "Beacons",
+    "memory": "Memories",
+    "legendary": "Legendary gear",
+    "skill": "Skills",
+    "destiny": "Destiny",
+    "tartarus": "Tartarus",
+    "divinity": "Divinity",
+    "prism": "Prisms",
+    "organ": "Organs",
+    "other": "Other"
+  },
+  "items": {
+    "unknown": "Item #{id}"
+  },
+  "bag": {
+    "title": "Bag",
+    "subtitle": "What the tracker currently knows is in your inventory",
+    "total": "Value",
+    "recalibrate": "Recalibrate",
+    "pages": "Known pages:",
+    "page": {
+      "100": "Gear",
+      "101": "Skills",
+      "102": "Currency",
+      "103": "Other"
+    },
+    "empty": "No items known yet. Open your bag in game."
+  },
+  "prices": {
+    "title": "Prices",
+    "updated": "{n} market prices, updated",
+    "never": "Market prices not downloaded yet",
+    "refresh": "Refresh prices",
+    "refreshing": "Refreshing…",
+    "filter": {
+      "priced": "With price",
+      "all": "All items",
+      "manual": "Manual price",
+      "excluded": "Not counted"
+    },
+    "item": "Item",
+    "category": "Category",
+    "price": "Price",
+    "source": "Source",
+    "manual": "Your price",
+    "counts": "Count",
+    "countsHint": "Include this item in profit",
+    "auto": "auto",
+    "src": {
+      "currency": "Currency",
+      "manual": "Your price",
+      "search": "Your auction search",
+      "market": "Market",
+      "none": "No price"
+    },
+    "empty": "No items match"
+  },
+  "history": {
+    "title": "History",
+    "subtitle": "Every completed map run"
+  },
+  "range": {
+    "today": "Today",
+    "7d": "7 days",
+    "30d": "30 days",
+    "all": "All time",
+    "currentCharacter": "Current character only"
+  },
+  "analytics": {
+    "title": "Analytics",
+    "subtitle": "Which maps pay best, from your own runs",
+    "daily": "Profit per day",
+    "mapsShort": "maps",
+    "byMap": "By map",
+    "avgCost": "Avg cost",
+    "avgProfit": "Avg profit",
+    "total": "Total",
+    "topLoot": "Most valuable loot",
+    "costs": "Spent on maps"
+  },
+  "strategies": {
+    "title": "Strategies",
+    "subtitle": "Public leaderboard from the community price service (read-only)",
+    "count": "{n} strategies",
+    "error": "Could not load strategies",
+    "strategy": "Strategy",
+    "score": "Score",
+    "perMap": "Per map",
+    "level": "Lv {n}",
+    "empty": "No strategies for this stage",
+    "noTalents": "No talents",
+    "moreMechanics": " (+{n} total)",
+    "moreItems": " (+{n} items total)",
+    "stage": {
+      "legacy": "Legacy",
+      "day": "Day {n}",
+      "week": "Week {n}"
+    }
+  },
+  "settings": {
+    "title": "Settings",
+    "log": {
+      "title": "Game log",
+      "notFound": "Not found",
+      "auto": "Auto-detected",
+      "manual": "Chosen manually",
+      "choose": "Choose file…",
+      "useAuto": "Use auto-detect",
+      "help": "The tracker only reads UE_game.log from the game folder. Enable \"Enable Log\" in the game settings, then re-enter with your character."
+    },
+    "tracking": {
+      "title": "Tracking",
+      "tax": "Value loot after the market fee",
+      "taxHelp": "Selling on the auction house costs 12.5%. Costs and Flame Elementium are never reduced.",
+      "refresh": "Refresh market prices every",
+      "minutes": "{n} min"
+    },
+    "appearance": {
+      "title": "Appearance",
+      "theme": "Theme",
+      "system": "System",
+      "dark": "Dark",
+      "light": "Light",
+      "language": "Language",
+      "overlayOpacity": "Overlay opacity"
+    },
+    "privacy": {
+      "title": "Privacy",
+      "body": "Everything is stored on this PC. The app only downloads the public price list and strategy leaderboard; it never uploads anything, never runs commands and does not need administrator rights."
+    }
+  },
+  "overlay": {
+    "session": "Session",
+    "perHour": "Per hour",
+    "mapProfit": "Map profit",
+    "live": "Live",
+    "paused": "Paused",
+    "waiting": "Waiting for a map"
+  },
+  "terms": {
+    "冰图": "Ice map",
+    "火图": "Fire map",
+    "钢图": "Steel map",
+    "雷图": "Thunder map",
+    "暗图": "Dark map",
+    "深空": "Deep Space",
+    "万界": "Myriad Realms",
+    "幽邃": "Profound",
+    "罗盘": "Compass",
+    "星盘": "Astrolabe",
+    "囚笼": "Cage",
+    "玩偶": "Doll",
+    "通货": "Currency",
+    "通缉": "Outlaw",
+    "传奇装备": "Legendary Gear",
+    "装备": "Gear",
+    "明月": "Lunaria",
+    "巨力": "Might",
+    "征战": "War",
+    "狩猎": "Hunting",
+    "机械": "Machines",
+    "画雪": "Frozen Canvas",
+    "迷城": "Aeterna",
+    "黑潮": "Dark Surge",
+    "叠界": "Overrealm",
+    "黑帆": "Blacksail",
+    "渴瘾": "Vorax",
+    "大亨": "Sandlord",
+    "梦魇": "Nightmare",
+    "塔罗": "Arcana",
+    "守夜": "Vigil",
+    "监视者": "Watcher",
+    "持律人": "Lawkeeper",
+    "虚海之主": "Lord of the Void Sea",
+    "无天赋": "No talents",
+    "无成本物品": "No cost items",
+    "遗珍": "Artifact",
+    "时刻": "Timemark"
+  }
+}

@@ -1,0 +1,234 @@
+Log file open, demo
+[2026.10.25-09.30.55:427][  2]GameLog: Display: [Game] ----Socket RecvMessage STT----GetPlayerData----SynId = 54964
++player+PlayerId [900000000000000001]
+|      +SeasonId [1601]
+|      +Name [DemoHero]
+[2026.10.25-09.30.55:427][  3]GameLog: Display: [Game] ----Socket RecvMessage End----
+[2026.10.25-09.30.55:427][  4]TLGame: Display: [Game] SwitchBattleAreaUtil:_JoinFightSuccess()
++areaId [110_hideout]
++worldInitArgs+ownerPlayerId [900000000000000001]
+|             +seed [1688595682]
++mapId [111000]
++maptype [MainCity]
++checkType [MainCity]
+[2026.10.25-09.30.55:427][  5]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:427][  6]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:427][  7]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:427][  8]TLGame: Display: [Game] ItemChange@ Reset PageId=102
+[2026.10.25-09.30.55:427][  9]TLGame: Display: [Game] ItemChange@ Add Id=100300_a8eac81f BagNum=1200 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:427][ 10]TLGame: Display: [Game] ItemChange@ Reset PageId=103
+[2026.10.25-09.30.55:427][ 11]TLGame: Display: [Game] ItemChange@ Add Id=400015_e0c64034 BagNum=20 in PageId=103 SlotId=0
+[2026.10.25-09.30.55:427][ 12]TLGame: Display: [Game] ItemChange@ Add Id=10250_be4dbf26 BagNum=15 in PageId=103 SlotId=1
+[2026.10.25-09.30.55:427][ 13]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:427][ 14]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:427][ 15]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:427][ 16]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:427][ 17]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:430][ 18]TLGame: Display: [Game] ItemChange@ ProtoName=Spv3Open start
+[2026.10.25-09.30.55:430][ 19]TLGame: Display: [Game] ItemChange@ Update Id=400015_e0c64034 BagNum=19 in PageId=103 SlotId=0
+[2026.10.25-09.30.55:430][ 20]TLGame: Display: [Game] ItemChange@ Update Id=10250_be4dbf26 BagNum=14 in PageId=103 SlotId=1
+[2026.10.25-09.30.55:430][ 21]TLGame: Display: [Game] ItemChange@ ProtoName=Spv3Open end
+[2026.10.25-09.30.55:431][ 22]TLGame: Display: [Game] SwitchBattleAreaUtil:_JoinFightSuccess()
++areaId [1061100_demo0_553760]
++worldInitArgs+ownerPlayerId [900000000000000001]
+|             +seed [798965949]
++mapId [1061100]
++maptype [S4Map]
+[2026.10.25-09.30.55:431][ 23]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:431][ 24]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:431][ 25]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:438][ 26]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:438][ 27]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1203 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:438][ 28]TLGame: Display: [Game] ItemChange@ Add Id=5144_868ddc9e BagNum=1 in PageId=103 SlotId=2
+[2026.10.25-09.30.55:438][ 29]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:438][ 30]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:438][ 31]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:443][ 32]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:443][ 33]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1215 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:443][ 34]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:443][ 35]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:443][ 36]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:451][ 37]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:451][ 38]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1231 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:451][ 39]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:451][ 40]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:451][ 41]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:459][ 42]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:459][ 43]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1240 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:459][ 44]TLGame: Display: [Game] ItemChange@ Add Id=5029_f6df7924 BagNum=2 in PageId=103 SlotId=3
+[2026.10.25-09.30.55:459][ 45]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:459][ 46]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:459][ 47]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:468][ 48]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:468][ 49]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1256 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:468][ 50]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:468][ 51]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:468][ 52]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:476][ 53]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:476][ 54]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1275 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:476][ 55]TLGame: Display: [Game] ItemChange@ Add Id=6003_33553efa BagNum=2 in PageId=103 SlotId=4
+[2026.10.25-09.30.55:476][ 56]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:476][ 57]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:476][ 58]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:484][ 59]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:484][ 60]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1278 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:484][ 61]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:484][ 62]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:484][ 63]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:488][ 64]TLGame: Display: [Game] SwitchBattleAreaUtil:_JoinFightSuccess()
++areaId [110_hideout]
++worldInitArgs+ownerPlayerId [900000000000000001]
+|             +seed [1115483137]
++mapId [111000]
++maptype [MainCity]
++checkType [MainCity]
+[2026.10.25-09.30.55:488][ 65]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:488][ 66]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:488][ 67]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:496][ 68]TLGame: Display: [Game] ItemChange@ ProtoName=Spv3Open start
+[2026.10.25-09.30.55:496][ 69]TLGame: Display: [Game] ItemChange@ Update Id=400015_e0c64034 BagNum=18 in PageId=103 SlotId=0
+[2026.10.25-09.30.55:496][ 70]TLGame: Display: [Game] ItemChange@ Update Id=10250_be4dbf26 BagNum=13 in PageId=103 SlotId=1
+[2026.10.25-09.30.55:496][ 71]TLGame: Display: [Game] ItemChange@ ProtoName=Spv3Open end
+[2026.10.25-09.30.55:498][ 72]TLGame: Display: [Game] SwitchBattleAreaUtil:_JoinFightSuccess()
++areaId [1061100_demo1_101429]
++worldInitArgs+ownerPlayerId [900000000000000001]
+|             +seed [28815650]
++mapId [1061100]
++maptype [S4Map]
+[2026.10.25-09.30.55:498][ 73]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:498][ 74]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:498][ 75]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:506][ 76]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:506][ 77]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1300 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:506][ 78]TLGame: Display: [Game] ItemChange@ Add Id=10140_ea1f59f8 BagNum=2 in PageId=103 SlotId=5
+[2026.10.25-09.30.55:506][ 79]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:506][ 80]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:506][ 81]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:515][ 82]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:515][ 83]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1318 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:515][ 84]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:515][ 85]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:515][ 86]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:524][ 87]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:524][ 88]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1339 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:524][ 89]TLGame: Display: [Game] ItemChange@ Update Id=5029_f6df7924 BagNum=4 in PageId=103 SlotId=3
+[2026.10.25-09.30.55:524][ 90]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:524][ 91]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:524][ 92]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:529][ 93]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:529][ 94]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1356 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:529][ 95]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:529][ 96]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:529][ 97]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:537][ 98]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:537][ 99]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1364 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:537][100]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:537][101]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:537][102]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:543][103]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:543][104]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1388 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:543][105]TLGame: Display: [Game] ItemChange@ Update Id=5144_868ddc9e BagNum=3 in PageId=103 SlotId=2
+[2026.10.25-09.30.55:543][106]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:543][107]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:543][108]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:550][109]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:550][110]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1413 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:550][111]TLGame: Display: [Game] ItemChange@ Add Id=410102_a224aa74 BagNum=2 in PageId=103 SlotId=6
+[2026.10.25-09.30.55:550][112]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:550][113]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:550][114]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:556][115]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:556][116]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1423 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:556][117]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:556][118]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:556][119]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:561][120]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:561][121]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1446 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:561][122]TLGame: Display: [Game] ItemChange@ Update Id=6003_33553efa BagNum=4 in PageId=103 SlotId=4
+[2026.10.25-09.30.55:561][123]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:561][124]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:562][125]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:565][126]TLGame: Display: [Game] SwitchBattleAreaUtil:_JoinFightSuccess()
++areaId [110_hideout]
++worldInitArgs+ownerPlayerId [900000000000000001]
+|             +seed [839522272]
++mapId [111000]
++maptype [MainCity]
++checkType [MainCity]
+[2026.10.25-09.30.55:565][127]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:565][128]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:565][129]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:572][130]TLGame: Display: [Game] ItemChange@ ProtoName=Spv3Open start
+[2026.10.25-09.30.55:572][131]TLGame: Display: [Game] ItemChange@ Update Id=400015_e0c64034 BagNum=17 in PageId=103 SlotId=0
+[2026.10.25-09.30.55:572][132]TLGame: Display: [Game] ItemChange@ Update Id=10250_be4dbf26 BagNum=12 in PageId=103 SlotId=1
+[2026.10.25-09.30.55:572][133]TLGame: Display: [Game] ItemChange@ ProtoName=Spv3Open end
+[2026.10.25-09.30.55:574][134]TLGame: Display: [Game] SwitchBattleAreaUtil:_JoinFightSuccess()
++areaId [1061100_demo2_755942]
++worldInitArgs+ownerPlayerId [900000000000000001]
+|             +seed [300437154]
++mapId [1061100]
++maptype [S4Map]
+[2026.10.25-09.30.55:574][135]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:574][136]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:574][137]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:583][138]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:583][139]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1452 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:583][140]TLGame: Display: [Game] ItemChange@ Add Id=370201_686d6efc BagNum=2 in PageId=103 SlotId=7
+[2026.10.25-09.30.55:583][141]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:583][142]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:583][143]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:590][144]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:590][145]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1461 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:590][146]TLGame: Display: [Game] ItemChange@ Add Id=6118_d63e6bb6 BagNum=2 in PageId=103 SlotId=8
+[2026.10.25-09.30.55:590][147]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:590][148]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:590][149]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:594][150]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:594][151]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1480 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:594][152]TLGame: Display: [Game] ItemChange@ Update Id=6118_d63e6bb6 BagNum=4 in PageId=103 SlotId=8
+[2026.10.25-09.30.55:594][153]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:594][154]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:594][155]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:600][156]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:600][157]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1488 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:600][158]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:600][159]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:600][160]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:606][161]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:606][162]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1496 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:606][163]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:606][164]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:606][165]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:612][166]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:612][167]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1512 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:612][168]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:612][169]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:612][170]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:618][171]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:618][172]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1534 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:618][173]TLGame: Display: [Game] ItemChange@ Update Id=10140_ea1f59f8 BagNum=4 in PageId=103 SlotId=5
+[2026.10.25-09.30.55:618][174]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:618][175]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:618][176]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:625][177]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:625][178]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1538 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:625][179]TLGame: Display: [Game] ItemChange@ Update Id=6003_33553efa BagNum=6 in PageId=103 SlotId=4
+[2026.10.25-09.30.55:625][180]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:625][181]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:625][182]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:634][183]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems start
+[2026.10.25-09.30.55:634][184]TLGame: Display: [Game] ItemChange@ Update Id=100300_a8eac81f BagNum=1548 in PageId=102 SlotId=0
+[2026.10.25-09.30.55:634][185]TLGame: Display: [Game] ItemChange@ Update Id=6118_d63e6bb6 BagNum=6 in PageId=103 SlotId=8
+[2026.10.25-09.30.55:634][186]TLGame: Display: [Game] ItemChange@ ProtoName=PickItems end
+[2026.10.25-09.30.55:634][187]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:634][188]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:638][189]TLGame: Display: [Game] SwitchBattleAreaUtil:_JoinFightSuccess()
++areaId [110_hideout]
++worldInitArgs+ownerPlayerId [900000000000000001]
+|             +seed [1431072718]
++mapId [111000]
++maptype [MainCity]
++checkType [MainCity]
+[2026.10.25-09.30.55:638][190]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:638][191]TLGame: Display: [Game] UIManager@ tick
+[2026.10.25-09.30.55:638][192]TLGame: Display: [Game] UIManager@ tick

@@ -1,0 +1,6 @@
+* text=auto
+src-tauri/tests/fixtures/*.log -text
+*.webp binary
+*.png binary
+*.ico binary
+*.icns binary
