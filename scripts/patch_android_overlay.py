@@ -170,13 +170,35 @@ if activity.suffix != ".kt":
 # PiP is safe to enter from the foreground Activity when the user presses Home.
 if "onUserLeaveHint" not in text:
     if "import android.os.Build" not in text:
-        text = text.replace(f"package {package}", f"package {package}\n\nimport android.app.PictureInPictureParams\nimport android.os.Build\nimport android.util.Rational", 1)
+        text = text.replace(f"package {package}", f"package {package}\n\nimport android.app.PictureInPictureParams\nimport android.os.Build\nimport android.util.Rational\nimport android.view.View\nimport android.view.ViewGroup\nimport android.webkit.WebView", 1)
     class_end = text.rfind("}")
     if class_end < 0:
         raise SystemExit("could not find MainActivity closing brace")
     pip = """
+  private fun findTrackerWebView(view: View): WebView? {
+    if (view is WebView) return view
+    if (view is ViewGroup) {
+      for (index in 0 until view.childCount) {
+        findTrackerWebView(view.getChildAt(index))?.let { return it }
+      }
+    }
+    return null
+  }
+
+  private fun switchToCompactHud() {
+    findTrackerWebView(window.decorView)?.post {
+      it.evaluateJavascript(
+        "if (!location.hash.startsWith('#/overlay')) location.hash = '#/overlay';",
+        null
+      )
+    }
+  }
+
   override fun onUserLeaveHint() {
     super.onUserLeaveHint()
+    // PiP captures the current WebView immediately. Select the compact HUD
+    // before entering PiP so Overview/settings can never appear in the game.
+    switchToCompactHud()
     if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
       val params = PictureInPictureParams.Builder()
         .setAspectRatio(Rational(16, 9))
