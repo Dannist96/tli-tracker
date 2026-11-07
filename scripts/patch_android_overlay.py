@@ -186,12 +186,15 @@ if "onUserLeaveHint" not in text:
   }
 
   private fun switchToCompactHud() {
-    findTrackerWebView(window.decorView)?.post {
-      it.evaluateJavascript(
-        "if (!location.hash.startsWith('#/overlay')) location.hash = '#/overlay';",
-        null
-      )
-    }
+    val webView = findTrackerWebView(window.decorView) ?: return
+    webView.post(object : Runnable {
+      override fun run() {
+        webView.evaluateJavascript(
+          "if (!location.hash.startsWith('#/overlay')) location.hash = '#/overlay';",
+          null
+        )
+      }
+    })
   }
 
   override fun onUserLeaveHint() {
