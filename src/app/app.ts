@@ -141,13 +141,17 @@ export class App {
 
   async toggleOverlay(): Promise<void> {
     // Android cannot create a second Tauri WebView window. Open the dedicated
-    // HUD route in the current activity instead; MainActivity's PiP hook then
-    // keeps this HUD visible when the user presses Home or switches to the game.
+    // native overlay from the activity instead. This is independent of PiP and
+    // remains visible above Torchlight after the app is backgrounded.
     if (/Android/i.test(navigator.userAgent)) {
-      const next = !this.overlayOpen();
-      if (next) await this.router.navigateByUrl('/overlay');
-      else await this.router.navigateByUrl('/overview');
-      this.overlayOpen.set(next);
+      const bridge = (window as Window & { TLIOverlay?: { toggle: () => void } }).TLIOverlay;
+      if (bridge) {
+        bridge.toggle();
+        this.overlayOpen.set(!this.overlayOpen());
+      } else {
+        await this.router.navigateByUrl('/overlay');
+        this.overlayOpen.set(true);
+      }
       return;
     }
     this.overlayOpen.set(await api.toggleOverlay());

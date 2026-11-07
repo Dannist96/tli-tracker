@@ -40,6 +40,7 @@ import android.app.Service
 import android.content.Intent
 import android.graphics.Color
 import android.graphics.PixelFormat
+import android.graphics.drawable.GradientDrawable
 import android.net.Uri
 import android.os.Build
 import android.os.Handler
@@ -64,6 +65,8 @@ class OverlayService : Service() {{
   private var touchY = 0f
   private lateinit var title: TextView
   private lateinit var stats: TextView
+  private lateinit var details: TextView
+  private lateinit var footer: TextView
 
   override fun onCreate() {{
     super.onCreate()
@@ -94,15 +97,29 @@ class OverlayService : Service() {{
     val box = LinearLayout(this)
     box.orientation = LinearLayout.VERTICAL
     box.setPadding(18, 12, 18, 12)
-    box.setBackgroundColor(Color.argb(225, 20, 18, 24))
+    val background = GradientDrawable()
+    background.setColor(Color.argb(238, 14, 13, 16))
+    background.cornerRadius = 24f
+    background.setStroke(2, Color.argb(80, 255, 122, 61))
+    box.background = background
     title = TextView(this)
     title.setTextColor(Color.WHITE)
-    title.textSize = 12f
+    title.textSize = 15f
+    title.setTypeface(null, android.graphics.Typeface.BOLD)
     stats = TextView(this)
-    stats.setTextColor(Color.rgb(255, 195, 91))
-    stats.textSize = 14f
+    stats.setTextColor(Color.rgb(79, 224, 160))
+    stats.textSize = 28f
+    stats.setTypeface(null, android.graphics.Typeface.BOLD)
+    details = TextView(this)
+    details.setTextColor(Color.LTGRAY)
+    details.textSize = 13f
+    footer = TextView(this)
+    footer.setTextColor(Color.rgb(255, 195, 91))
+    footer.textSize = 13f
     box.addView(title)
     box.addView(stats)
+    box.addView(details)
+    box.addView(footer)
     box.setOnTouchListener {{ _, event ->
       when (event.action) {{
         MotionEvent.ACTION_DOWN -> {{ lastX = event.rawX.toInt(); lastY = event.rawY.toInt(); touchX = event.rawX; touchY = event.rawY; true }}
@@ -115,7 +132,7 @@ class OverlayService : Service() {{
       }}
     }}
     val type = if (Build.VERSION.SDK_INT >= 26) WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY else WindowManager.LayoutParams.TYPE_PHONE
-    val params = WindowManager.LayoutParams(330, 90, type, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT)
+    val params = WindowManager.LayoutParams(520, 240, type, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT)
     params.gravity = Gravity.TOP or Gravity.END
     params.x = 16; params.y = 120
     windowManager.addView(box, params)
@@ -135,10 +152,19 @@ class OverlayService : Service() {{
       val state = findState() ?: return
       val tracker = JSONObject(state.readText()).optJSONObject("tracker") ?: return
       val current = tracker.optJSONObject("current")
-      title.text = if (current == null) "TLI Tracker · chờ map" else "TLI Tracker · đang chạy"
+      val active = tracker.optString("status", "paused") == "active" && current != null
+      title.text = if (current == null) "TLI TRACKER  ·  WAITING FOR A MAP" else "LIVE  ·  " + current.optString("areaId", "MAP")
       val profit = current?.optDouble("profit", 0.0) ?: 0.0
-      val maps = tracker.optJSONArray("history")?.length() ?: 0
-      stats.text = "${{String.format("%.0f", profit)}} FE  ·  $maps map"
+      val duration = current?.optLong("durationMs", 0L) ?: 0L
+      val perHour = if (duration > 0) profit / (duration / 3600000.0) else 0.0
+      val session = tracker.optJSONObject("session")
+      val sessionProfit = session?.optDouble("profit", 0.0) ?: 0.0
+      val maps = session?.optInt("mapCount", 0) ?: 0
+      title.setTextColor(if (active) Color.rgb(79, 224, 160) else Color.LTGRAY)
+      stats.setTextColor(if (profit >= 0) Color.rgb(79, 224, 160) else Color.rgb(255, 107, 107))
+      stats.text = String.format("%+.0f FE", profit)
+      details.text = String.format("TIME  %02d:%02d        MAP PROFIT  %+.0f/h", duration / 60000, (duration / 1000) % 60, perHour)
+      footer.text = String.format("SESSION  %+.0f FE        MAPS  %d        %s", sessionProfit, maps, if (active) "LIVE" else "PAUSED")
     }} catch (_: Exception) {{}}
   }}
 
@@ -170,7 +196,7 @@ if activity.suffix != ".kt":
 # PiP is safe to enter from the foreground Activity when the user presses Home.
 if "onUserLeaveHint" not in text:
     if "import android.os.Build" not in text:
-        text = text.replace(f"package {package}", f"package {package}\n\nimport android.app.PictureInPictureParams\nimport android.os.Build\nimport android.os.Handler\nimport android.os.Looper\nimport android.util.Rational\nimport android.view.View\nimport android.view.ViewGroup\nimport android.webkit.WebView", 1)
+        text = text.replace(f"package {package}", f"package {package}\n\nimport android.app.PictureInPictureParams\nimport android.content.Intent\nimport android.net.Uri\nimport android.os.Build\nimport android.os.Handler\nimport android.os.Looper\nimport android.provider.Settings\nimport android.util.Rational\nimport android.view.View\nimport android.view.ViewGroup\nimport android.webkit.JavascriptInterface\nimport android.webkit.WebView", 1)
     class_end = text.rfind("}")
     if class_end < 0:
         raise SystemExit("could not find MainActivity closing brace")
@@ -205,6 +231,45 @@ if "onUserLeaveHint" not in text:
         )
       }
     })
+  }
+
+  private var overlayBridgeInstalled = false
+
+  private fun installOverlayBridge() {
+    val webView = findTrackerWebView(window.decorView)
+    if (webView == null) {
+      hudRouteHandler.postDelayed({ installOverlayBridge() }, 200)
+      return
+    }
+    if (overlayBridgeInstalled) return
+    webView.addJavascriptInterface(object {
+      @JavascriptInterface
+      fun toggle() {
+        hudRouteHandler.post {
+          if (!Settings.canDrawOverlays(this@MainActivity)) {
+            startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
+            return@post
+          }
+          val prefs = getSharedPreferences("tli-overlay", MODE_PRIVATE)
+          val enabled = prefs.getBoolean("enabled", false)
+          val serviceIntent = Intent(this@MainActivity, OverlayService::class.java)
+          if (enabled) {
+            stopService(serviceIntent)
+          } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+            startForegroundService(serviceIntent)
+          } else {
+            startService(serviceIntent)
+          }
+          prefs.edit().putBoolean("enabled", !enabled).apply()
+        }
+      }
+    }, "TLIOverlay")
+    overlayBridgeInstalled = true
+  }
+
+  override fun onResume() {
+    super.onResume()
+    installOverlayBridge()
   }
 
   override fun onUserLeaveHint() {
