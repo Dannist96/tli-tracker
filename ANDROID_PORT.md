@@ -8,11 +8,14 @@ existing history and bag calculations can be inspected without a running game.
 
 ## Current status
 
-- Android-specific Rust guards are in place for Steam discovery and overlay
-  window creation.
+- Android-specific Rust guards are in place for Steam discovery. The Android
+  build also installs a native foreground overlay service that shows the
+  current map profit above the game after the user grants **Display over other
+  apps** permission.
 - The log picker uses the Tauri dialog and filesystem plugins, copies Android
-  `content://` selections into app data, and replays the selected log through
-  the same parser as the live desktop tailer.
+  `content://` selections into app data, accepts `.log` or exported `.zip`
+  files, and replays the selected log through the same parser as the live
+  desktop tailer.
 - The narrow layout switches the left rail to a bottom navigation bar and
   hides desktop window controls and overlay settings.
 - Rust and Android packaging still need to be run on a machine with the Rust,

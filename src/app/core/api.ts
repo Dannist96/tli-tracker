@@ -121,6 +121,7 @@ export const api = {
   setExcluded: (itemId: string, excluded: boolean) => invoke<void>('set_excluded', { itemId, excluded }),
   updateSettings: (patch: SettingsPatch) => invoke<void>('update_settings', { patch }),
   chooseLogFile: () => invoke<boolean>('import_log_file'),
+  importLogFile: () => invoke<boolean>('import_log_file'),
   useDetectedLog: () => invoke<void>('use_detected_log'),
   newSession: () => invoke<void>('new_session'),
   endCurrentRun: () => invoke<void>('end_current_run'),

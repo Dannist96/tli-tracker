@@ -104,7 +104,7 @@ export class SettingsPage {
   }
 
   choose(): void {
-    void api.chooseLogFile();
+    void api.importLogFile();
   }
 
   useDetected(): void {

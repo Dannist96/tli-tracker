@@ -10,7 +10,7 @@ use prices::{MarketTable, PriceBook, MAX_PRICE};
 use serde::{Deserialize, Serialize};
 use std::collections::{HashMap, HashSet};
 use std::fs;
-use std::io::{Read, Seek, SeekFrom};
+use std::io::{Cursor, Read, Seek, SeekFrom};
 use std::path::{Path, PathBuf};
 use std::sync::{Arc, Mutex};
 use std::time::{Duration, SystemTime, UNIX_EPOCH};
@@ -391,7 +391,7 @@ fn get_price_list(state: Cmd) -> views::PriceList {
 async fn import_log_file(app: AppHandle, state: Cmd<'_>) -> Result<bool, String> {
     use tauri_plugin_dialog::DialogExt;
     let (tx, rx) = std::sync::mpsc::channel();
-    app.dialog().file().set_title("Import UE_game.log").add_filter("Game log", &["log"]).pick_file(move |file| {
+    app.dialog().file().set_title("Import UE_game.log or exported log ZIP").add_filter("Game log", &["log", "zip"]).pick_file(move |file| {
         let _ = tx.send(file);
     });
     let picked = tauri::async_runtime::spawn_blocking(move || rx.recv().ok().flatten()).await.map_err(|e| e.to_string())?;
@@ -399,7 +399,19 @@ async fn import_log_file(app: AppHandle, state: Cmd<'_>) -> Result<bool, String>
     // Android returns content:// URIs. The Tauri fs plugin can read those
     // handles, while std::fs cannot. Copy the result into app data so the
     // normal tailer can reopen it after the app is restarted.
-    let bytes = app.fs().read(file).map_err(|e| format!("cannot read log: {e}"))?;
+    let selected = app.fs().read(file).map_err(|e| format!("cannot read log: {e}"))?;
+    let bytes = if selected.starts_with(b"PK\x03\x04") {
+        let mut archive = zip::ZipArchive::new(Cursor::new(selected)).map_err(|e| format!("cannot open log ZIP: {e}"))?;
+        let index = (0..archive.len())
+            .find(|&i| archive.by_index(i).map(|f| f.name().ends_with("UE_game.log") || f.name().ends_with(".log")).unwrap_or(false))
+            .ok_or_else(|| "the ZIP does not contain a .log file".to_string())?;
+        let mut entry = archive.by_index(index).map_err(|e| format!("cannot open log entry: {e}"))?;
+        let mut extracted = Vec::new();
+        entry.read_to_end(&mut extracted).map_err(|e| format!("cannot extract log: {e}"))?;
+        extracted
+    } else {
+        selected
+    };
     let mut core = state.lock().unwrap();
     let path = core.data_dir.join("imported-UE_game.log");
     fs::write(&path, &bytes).map_err(|e| format!("cannot store imported log: {e}"))?;

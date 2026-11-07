@@ -41,11 +41,17 @@ jobs:
         with:
           targets: aarch64-linux-android,armv7-linux-androideabi,i686-linux-android,x86_64-linux-android
 
+      - name: Update Rust lockfile
+        run: cargo update --manifest-path src-tauri/Cargo.toml
+
       - name: Install JavaScript dependencies
         run: npm ci
 
       - name: Initialize Android project
         run: npx tauri android init
+
+      - name: Add Android overlay service
+        run: python3 scripts/patch_android_overlay.py
 
       - name: Build installable debug APK
         run: npx tauri android build --debug --apk --ci
