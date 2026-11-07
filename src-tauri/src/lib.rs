@@ -602,10 +602,7 @@ async fn toggle_overlay(app: AppHandle) -> Result<bool, String> {
 #[tauri::command]
 #[cfg(target_os = "android")]
 async fn toggle_overlay() -> Result<bool, String> {
-    // The Android activity owns the native overlay service. It requests the
-    // system overlay permission on first launch and starts/resumes the
-    // service when the permission is granted.
-    Ok(true)
+    Err("Android overlay is being prepared; use picture-in-picture after the next update".into())
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]

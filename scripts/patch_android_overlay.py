@@ -161,55 +161,12 @@ class OverlayService : Service() {{
 '''
 )
 
-if activity.suffix == ".kt":
-    if "OverlayService" not in text:
-        if "import android.os.Bundle" not in text:
-            text = text.replace(f"package {package}", f"package {package}\n\nimport android.os.Bundle\nimport android.content.Intent\nimport android.net.Uri\nimport android.os.Build\nimport android.provider.Settings", 1)
-        else:
-            text = text.replace("import android.os.Bundle", "import android.os.Bundle\nimport android.content.Intent\nimport android.net.Uri\nimport android.os.Build\nimport android.provider.Settings", 1)
-        start_call = """        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(this)) {
-            startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse(\"package:$packageName\")))
-        } else {
-            startService(Intent(this, OverlayService::class.java))
-        }"""
-        # Newer Tauri templates already provide onCreate (for example to call
-        # enableEdgeToEdge). Add the service start to that method instead of
-        # appending a second class body.
-        on_create = re.search(r"(override\s+fun\s+onCreate\s*\([^)]*\)\s*\{)", text)
-        if on_create:
-            insert_at = on_create.end()
-            text = text[:insert_at] + "\n" + start_call + text[insert_at:]
-        elif re.search(r"class\s+MainActivity\s*:\s*TauriActivity\(\)\s*\{", text):
-            text = re.sub(
-                r"(class\s+MainActivity\s*:\s*TauriActivity\(\)\s*\{)",
-                r"\1\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n" + start_call + "\n    }",
-                text,
-                count=1,
-            )
-        elif "class MainActivity : TauriActivity()" in text:
-            text = text.replace(
-                "class MainActivity : TauriActivity()",
-                "class MainActivity : TauriActivity() {\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n" + start_call + "\n    }\n}",
-                1,
-            )
-        else:
-            raise SystemExit("could not patch generated MainActivity")
-        if "override fun onResume" not in text:
-            class_end = text.rfind("}")
-            if class_end < 0:
-                raise SystemExit("could not find MainActivity closing brace")
-            resume = """\n
-  override fun onResume() {
-    super.onResume()
-    if (Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(this)) {
-      startService(Intent(this, OverlayService::class.java))
-    }
-  }
-"""
-            text = text[:class_end] + resume + text[class_end:]
-        activity.write_text(text)
-else:
+if activity.suffix != ".kt":
     raise SystemExit("Java MainActivity is not supported by this patch yet")
+# Do not start the foreground overlay service from Activity.onCreate/onResume.
+# Samsung Android can terminate the app during startup when a foreground
+# service is started before the user has explicitly enabled overlay access.
+# The service and manifest entry remain available for the later safe launcher.
 
 manifest = next((ROOT.parent / "main").rglob("AndroidManifest.xml"), None)
 if manifest is None:
