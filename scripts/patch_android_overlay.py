@@ -289,15 +289,8 @@ if "onUserLeaveHint" not in text:
 
   override fun onUserLeaveHint() {
     super.onUserLeaveHint()
-    // PiP captures the current WebView immediately. Select the compact HUD
-    // before entering PiP so Overview/settings can never appear in the game.
-    switchToCompactHud()
-    if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-      val params = PictureInPictureParams.Builder()
-        .setAspectRatio(Rational(16, 9))
-        .build()
-      enterPictureInPictureMode(params)
-    }
+    // Do not auto-enter PiP. Android overlay service is the supported in-game
+    // window; automatic PiP was the source of the old Overview card.
   }
 
   override fun onPictureInPictureModeChanged(
