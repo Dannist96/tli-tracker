@@ -99,7 +99,10 @@ export class App {
   constructor() {
     this.router.events.pipe(filter((e) => e instanceof NavigationEnd)).subscribe((e) => {
       this.route.set((e as NavigationEnd).urlAfterRedirects);
+      this.syncCompactRoute();
     });
+    window.addEventListener('resize', () => this.syncCompactRoute());
+    this.syncCompactRoute();
     effect(() => {
       document.documentElement.classList.toggle('overlay-mode', this.isOverlay());
     });
@@ -108,6 +111,14 @@ export class App {
       const dark = theme === 'dark' || (theme === 'system' && matchMedia('(prefers-color-scheme: dark)').matches);
       document.documentElement.dataset['theme'] = dark ? 'dark' : 'light';
     });
+  }
+
+  /** Android PiP is a very small WebView; show the dedicated HUD there. */
+  private syncCompactRoute(): void {
+    const compact = window.innerWidth <= 500 && window.innerHeight <= 500;
+    const isHud = this.route().startsWith('/overlay');
+    if (compact && !isHud) void this.router.navigateByUrl('/overlay');
+    else if (!compact && isHud) void this.router.navigateByUrl('/overview');
   }
 
   minimize(): void {
