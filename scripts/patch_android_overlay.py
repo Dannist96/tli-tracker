@@ -38,6 +38,7 @@ import android.app.NotificationManager
 import android.app.PendingIntent
 import android.app.Service
 import android.content.Intent
+import android.content.pm.ServiceInfo
 import android.graphics.Color
 import android.graphics.PixelFormat
 import android.graphics.drawable.GradientDrawable
@@ -70,8 +71,17 @@ class OverlayService : Service() {{
 
   override fun onCreate() {{
     super.onCreate()
-    startForeground(4217, notification())
-    if (Settings.canDrawOverlays(this)) showOverlay()
+    try {{
+      if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {{
+        startForeground(4217, notification(), ServiceInfo.FOREGROUND_SERVICE_TYPE_DATA_SYNC)
+      }} else {{
+        startForeground(4217, notification())
+      }}
+      if (Settings.canDrawOverlays(this)) showOverlay() else stopSelf()
+    }} catch (_: Throwable) {{
+      // Never crash-loop the host app if an OEM blocks this foreground service.
+      stopSelf()
+    }}
   }}
 
   private fun notification(): Notification {{
@@ -171,8 +181,13 @@ class OverlayService : Service() {{
   private fun findState(): File? = filesDir.walkTopDown().firstOrNull {{ it.isFile && it.name == "state.json" }}
 
   override fun onStartCommand(intent: Intent?, flags: Int, startId: Int): Int {{
-    if (overlay == null && Settings.canDrawOverlays(this)) showOverlay()
-    return START_STICKY
+    try {{
+      if (overlay == null && Settings.canDrawOverlays(this)) showOverlay()
+      else if (!Settings.canDrawOverlays(this)) stopSelf()
+    }} catch (_: Throwable) {{
+      stopSelf()
+    }}
+    return START_NOT_STICKY
   }}
 
   override fun onDestroy() {{
