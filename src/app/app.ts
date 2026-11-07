@@ -115,7 +115,10 @@ export class App {
 
   /** Android PiP is a very small WebView; show the dedicated HUD there. */
   private syncCompactRoute(): void {
-    const compact = window.innerWidth <= 500 && window.innerHeight <= 500;
+    // PiP dimensions vary by Samsung One UI and orientation. Detect a small
+    // window by its shorter side instead of requiring both CSS dimensions to
+    // be below the same threshold.
+    const compact = Math.min(window.innerWidth, window.innerHeight) <= 520 && Math.max(window.innerWidth, window.innerHeight) <= 1100;
     const isHud = this.route().startsWith('/overlay');
     if (compact && !isHud) void this.router.navigateByUrl('/overlay');
     else if (!compact && isHud) void this.router.navigateByUrl('/overview');
