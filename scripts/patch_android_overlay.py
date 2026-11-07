@@ -170,7 +170,7 @@ if activity.suffix != ".kt":
 # PiP is safe to enter from the foreground Activity when the user presses Home.
 if "onUserLeaveHint" not in text:
     if "import android.os.Build" not in text:
-        text = text.replace(f"package {package}", f"package {package}\n\nimport android.app.PictureInPictureParams\nimport android.os.Build\nimport android.util.Rational\nimport android.view.View\nimport android.view.ViewGroup\nimport android.webkit.WebView", 1)
+        text = text.replace(f"package {package}", f"package {package}\n\nimport android.app.PictureInPictureParams\nimport android.os.Build\nimport android.os.Handler\nimport android.os.Looper\nimport android.util.Rational\nimport android.view.View\nimport android.view.ViewGroup\nimport android.webkit.WebView", 1)
     class_end = text.rfind("}")
     if class_end < 0:
         raise SystemExit("could not find MainActivity closing brace")
@@ -185,12 +185,22 @@ if "onUserLeaveHint" not in text:
     return null
   }
 
+  private val hudRouteHandler = Handler(Looper.getMainLooper())
+  private var hudRouteAttempts = 0
+
   private fun switchToCompactHud() {
-    val webView = findTrackerWebView(window.decorView) ?: return
+    val webView = findTrackerWebView(window.decorView)
+    if (webView == null) {
+      if (hudRouteAttempts++ < 20) {
+        hudRouteHandler.postDelayed({ switchToCompactHud() }, 75)
+      }
+      return
+    }
+    hudRouteAttempts = 0
     webView.post(object : Runnable {
       override fun run() {
         webView.evaluateJavascript(
-          "if (!location.hash.startsWith('#/overlay')) location.hash = '#/overlay';",
+          "window.location.hash = '#/overlay';",
           null
         )
       }
@@ -207,6 +217,20 @@ if "onUserLeaveHint" not in text:
         .setAspectRatio(Rational(16, 9))
         .build()
       enterPictureInPictureMode(params)
+    }
+  }
+
+  override fun onPictureInPictureModeChanged(
+    isInPictureInPictureMode: Boolean,
+    newConfig: android.content.res.Configuration
+  ) {
+    super.onPictureInPictureModeChanged(isInPictureInPictureMode, newConfig)
+    if (isInPictureInPictureMode) {
+      // Samsung may resize the WebView after the PiP callback. Re-apply the
+      // route after the resize so PiP cannot remain on Overview.
+      hudRouteHandler.postDelayed({ switchToCompactHud() }, 100)
+      hudRouteHandler.postDelayed({ switchToCompactHud() }, 500)
+      hudRouteHandler.postDelayed({ switchToCompactHud() }, 1200)
     }
   }
 """
