@@ -163,7 +163,13 @@ if activity.suffix == ".kt":
             text = text.replace(f"package {package}", f"package {package}\n\nimport android.os.Bundle\nimport android.content.Intent", 1)
         else:
             text = text.replace("import android.os.Bundle", "import android.os.Bundle\nimport android.content.Intent", 1)
-        text = text.replace(") : TauriActivity() {", ") : TauriActivity() {\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        startService(Intent(this, OverlayService::class.java))\n    }")
+        body = "{\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        startService(Intent(this, OverlayService::class.java))\n    }\n}"
+        if ") : TauriActivity() {" in text:
+            text = text.replace(") : TauriActivity() {", ") : TauriActivity() " + body, 1)
+        elif "class MainActivity : TauriActivity()" in text:
+            text = text.replace("class MainActivity : TauriActivity()", "class MainActivity : TauriActivity() " + body, 1)
+        else:
+            raise SystemExit("could not patch generated MainActivity")
         activity.write_text(text)
 else:
     raise SystemExit("Java MainActivity is not supported by this patch yet")
