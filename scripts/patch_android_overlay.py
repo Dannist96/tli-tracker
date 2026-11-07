@@ -164,10 +164,14 @@ class OverlayService : Service() {{
 if activity.suffix == ".kt":
     if "OverlayService" not in text:
         if "import android.os.Bundle" not in text:
-            text = text.replace(f"package {package}", f"package {package}\n\nimport android.os.Bundle\nimport android.content.Intent\nimport android.provider.Settings", 1)
+            text = text.replace(f"package {package}", f"package {package}\n\nimport android.os.Bundle\nimport android.content.Intent\nimport android.net.Uri\nimport android.os.Build\nimport android.provider.Settings", 1)
         else:
-            text = text.replace("import android.os.Bundle", "import android.os.Bundle\nimport android.content.Intent\nimport android.provider.Settings", 1)
-        start_call = "        if (Settings.canDrawOverlays(this)) startService(Intent(this, OverlayService::class.java))"
+            text = text.replace("import android.os.Bundle", "import android.os.Bundle\nimport android.content.Intent\nimport android.net.Uri\nimport android.os.Build\nimport android.provider.Settings", 1)
+        start_call = """        if (Build.VERSION.SDK_INT >= 23 && !Settings.canDrawOverlays(this)) {
+            startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse(\"package:$packageName\")))
+        } else {
+            startService(Intent(this, OverlayService::class.java))
+        }"""
         # Newer Tauri templates already provide onCreate (for example to call
         # enableEdgeToEdge). Add the service start to that method instead of
         # appending a second class body.
@@ -190,6 +194,19 @@ if activity.suffix == ".kt":
             )
         else:
             raise SystemExit("could not patch generated MainActivity")
+        if "override fun onResume" not in text:
+            class_end = text.rfind("}")
+            if class_end < 0:
+                raise SystemExit("could not find MainActivity closing brace")
+            resume = """\n
+  override fun onResume() {
+    super.onResume()
+    if (Build.VERSION.SDK_INT < 23 || Settings.canDrawOverlays(this)) {
+      startService(Intent(this, OverlayService::class.java))
+    }
+  }
+"""
+            text = text[:class_end] + resume + text[class_end:]
         activity.write_text(text)
 else:
     raise SystemExit("Java MainActivity is not supported by this patch yet")
@@ -200,6 +217,8 @@ if manifest is None:
 manifest_text = manifest.read_text()
 if "SYSTEM_ALERT_WINDOW" not in manifest_text:
     manifest_text = manifest_text.replace("<application", '<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />\n    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />\n    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />\n    <application', 1)
+if "supportsPictureInPicture" not in manifest_text:
+    manifest_text = manifest_text.replace("<activity", '<activity android:supportsPictureInPicture="true" android:resizeableActivity="true"', 1)
 if "OverlayService" not in manifest_text:
     manifest_text = manifest_text.replace("</application>", '        <service android:name=".OverlayService" android:exported="false" android:foregroundServiceType="dataSync" />\n    </application>', 1)
 manifest.write_text(manifest_text)

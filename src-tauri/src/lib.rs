@@ -602,7 +602,10 @@ async fn toggle_overlay(app: AppHandle) -> Result<bool, String> {
 #[tauri::command]
 #[cfg(target_os = "android")]
 async fn toggle_overlay() -> Result<bool, String> {
-    Err("The floating overlay is available on desktop only".into())
+    // The Android activity owns the native overlay service. It requests the
+    // system overlay permission on first launch and starts/resumes the
+    // service when the permission is granted.
+    Ok(true)
 }
 
 #[cfg_attr(mobile, tauri::mobile_entry_point)]
