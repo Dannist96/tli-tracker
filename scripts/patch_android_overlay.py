@@ -167,11 +167,27 @@ if activity.suffix == ".kt":
             text = text.replace(f"package {package}", f"package {package}\n\nimport android.os.Bundle\nimport android.content.Intent", 1)
         else:
             text = text.replace("import android.os.Bundle", "import android.os.Bundle\nimport android.content.Intent", 1)
-        body = "{\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n        startService(Intent(this, OverlayService::class.java))\n    }\n}"
-        if ") : TauriActivity() {" in text:
-            text = text.replace(") : TauriActivity() {", ") : TauriActivity() " + body, 1)
+        start_call = "        startService(Intent(this, OverlayService::class.java))"
+        # Newer Tauri templates already provide onCreate (for example to call
+        # enableEdgeToEdge). Add the service start to that method instead of
+        # appending a second class body.
+        on_create = re.search(r"(override\s+fun\s+onCreate\s*\([^)]*\)\s*\{)", text)
+        if on_create:
+            insert_at = on_create.end()
+            text = text[:insert_at] + "\n" + start_call + text[insert_at:]
+        elif re.search(r"class\s+MainActivity\s*:\s*TauriActivity\(\)\s*\{", text):
+            text = re.sub(
+                r"(class\s+MainActivity\s*:\s*TauriActivity\(\)\s*\{)",
+                r"\1\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n" + start_call + "\n    }",
+                text,
+                count=1,
+            )
         elif "class MainActivity : TauriActivity()" in text:
-            text = text.replace("class MainActivity : TauriActivity()", "class MainActivity : TauriActivity() " + body, 1)
+            text = text.replace(
+                "class MainActivity : TauriActivity()",
+                "class MainActivity : TauriActivity() {\n    override fun onCreate(savedInstanceState: Bundle?) {\n        super.onCreate(savedInstanceState)\n" + start_call + "\n    }\n}",
+                1,
+            )
         else:
             raise SystemExit("could not patch generated MainActivity")
         activity.write_text(text)
