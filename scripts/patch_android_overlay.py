@@ -60,6 +60,8 @@ class OverlayService : Service() {{
   private val handler = Handler(mainLooper)
   private lateinit var windowManager: WindowManager
   private var overlay: View? = null
+  private var expanded = false
+  private lateinit var box: LinearLayout
   private var lastX = 0
   private var lastY = 0
   private var touchX = 0f
@@ -104,7 +106,7 @@ class OverlayService : Service() {{
   private fun showOverlay() {{
     if (overlay != null) return
     windowManager = getSystemService(WINDOW_SERVICE) as WindowManager
-    val box = LinearLayout(this)
+    box = LinearLayout(this)
     box.orientation = LinearLayout.VERTICAL
     box.setPadding(18, 12, 18, 12)
     val background = GradientDrawable()
@@ -126,23 +128,26 @@ class OverlayService : Service() {{
     footer = TextView(this)
     footer.setTextColor(Color.rgb(255, 195, 91))
     footer.textSize = 13f
+    stats.visibility = View.GONE
+    details.visibility = View.GONE
+    footer.visibility = View.GONE
     box.addView(title)
     box.addView(stats)
     box.addView(details)
     box.addView(footer)
-    box.setOnTouchListener {{ _, event ->
-      when (event.action) {{
-        MotionEvent.ACTION_DOWN -> {{ lastX = event.rawX.toInt(); lastY = event.rawY.toInt(); touchX = event.rawX; touchY = event.rawY; true }}
-        MotionEvent.ACTION_MOVE -> {{
-          val p = overlay?.layoutParams as? WindowManager.LayoutParams ?: return@setOnTouchListener true
-          p.x += event.rawX.toInt() - lastX; p.y += event.rawY.toInt() - lastY
-          lastX = event.rawX.toInt(); lastY = event.rawY.toInt(); windowManager.updateViewLayout(box, p); true
-        }}
-        else -> true
-      }}
+    box.setOnClickListener {{
+      expanded = !expanded
+      val p = overlay?.layoutParams as? WindowManager.LayoutParams ?: return@setOnClickListener
+      p.width = if (expanded) 520 else 72
+      p.height = if (expanded) 240 else 72
+      title.text = if (expanded) title.text else "🔥"
+      stats.visibility = if (expanded) View.VISIBLE else View.GONE
+      details.visibility = if (expanded) View.VISIBLE else View.GONE
+      footer.visibility = if (expanded) View.VISIBLE else View.GONE
+      windowManager.updateViewLayout(box, p)
     }}
     val type = if (Build.VERSION.SDK_INT >= 26) WindowManager.LayoutParams.TYPE_APPLICATION_OVERLAY else WindowManager.LayoutParams.TYPE_PHONE
-    val params = WindowManager.LayoutParams(520, 240, type, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT)
+    val params = WindowManager.LayoutParams(72, 72, type, WindowManager.LayoutParams.FLAG_NOT_FOCUSABLE, PixelFormat.TRANSLUCENT)
     params.gravity = Gravity.TOP or Gravity.END
     params.x = 16; params.y = 120
     windowManager.addView(box, params)
@@ -163,7 +168,7 @@ class OverlayService : Service() {{
       val tracker = JSONObject(state.readText()).optJSONObject("tracker") ?: return
       val current = tracker.optJSONObject("current")
       val active = tracker.optString("status", "paused") == "active" && current != null
-      title.text = if (current == null) "TLI TRACKER  ·  WAITING FOR A MAP" else "LIVE  ·  " + current.optString("areaId", "MAP")
+      title.text = if (!expanded) "🔥" else if (current == null) "TLI TRACKER  ·  WAITING FOR A MAP" else "LIVE  ·  " + current.optString("areaId", "MAP")
       val profit = current?.optDouble("profit", 0.0) ?: 0.0
       val duration = current?.optLong("durationMs", 0L) ?: 0L
       val perHour = if (duration > 0) profit / (duration / 3600000.0) else 0.0
@@ -261,21 +266,25 @@ if "onUserLeaveHint" not in text:
       @JavascriptInterface
       fun toggle() {
         hudRouteHandler.post {
-          if (!Settings.canDrawOverlays(this@MainActivity)) {
-            startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
-            return@post
+          try {
+            if (!Settings.canDrawOverlays(this@MainActivity)) {
+              startActivity(Intent(Settings.ACTION_MANAGE_OVERLAY_PERMISSION, Uri.parse("package:$packageName")))
+              return@post
+            }
+            val prefs = getSharedPreferences("tli-overlay", MODE_PRIVATE)
+            val enabled = prefs.getBoolean("enabled", false)
+            val serviceIntent = Intent(this@MainActivity, OverlayService::class.java)
+            if (enabled) {
+              stopService(serviceIntent)
+            } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
+              startForegroundService(serviceIntent)
+            } else {
+              startService(serviceIntent)
+            }
+            prefs.edit().putBoolean("enabled", !enabled).apply()
+          } catch (_: Throwable) {
+            getSharedPreferences("tli-overlay", MODE_PRIVATE).edit().putBoolean("enabled", false).apply()
           }
-          val prefs = getSharedPreferences("tli-overlay", MODE_PRIVATE)
-          val enabled = prefs.getBoolean("enabled", false)
-          val serviceIntent = Intent(this@MainActivity, OverlayService::class.java)
-          if (enabled) {
-            stopService(serviceIntent)
-          } else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            startForegroundService(serviceIntent)
-          } else {
-            startService(serviceIntent)
-          }
-          prefs.edit().putBoolean("enabled", !enabled).apply()
         }
       }
     }, "TLIOverlay")
