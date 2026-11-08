@@ -324,9 +324,9 @@ if manifest is None:
     raise SystemExit("generated AndroidManifest.xml not found")
 manifest_text = manifest.read_text()
 if "SYSTEM_ALERT_WINDOW" not in manifest_text:
-    manifest_text = manifest_text.replace("<application", '<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />\n    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />\n    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />\n    <application', 1)
+    manifest_text = manifest_text.replace("<application", '<uses-permission android:name="android.permission.SYSTEM_ALERT_WINDOW" />\n    <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />\n    <uses-permission android:name="android.permission.FOREGROUND_SERVICE" />\n    <uses-permission android:name="android.permission.FOREGROUND_SERVICE_DATA_SYNC" />\n    <application', 1)
 if "supportsPictureInPicture" not in manifest_text:
     manifest_text = manifest_text.replace("<activity", '<activity android:supportsPictureInPicture="true" android:resizeableActivity="true"', 1)
 if "OverlayService" not in manifest_text:
-    manifest_text = manifest_text.replace("</application>", '        <service android:name=".OverlayService" android:exported="false" android:foregroundServiceType="dataSync" />\n    </application>', 1)
+    manifest_text = manifest_text.replace("</application>", '        <service android:name=".OverlayService" android:exported="false" android:process=":overlay" android:foregroundServiceType="dataSync" />\n    </application>', 1)
 manifest.write_text(manifest_text)
